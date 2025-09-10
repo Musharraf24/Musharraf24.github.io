@@ -1,0 +1,42 @@
+---
+title: "Assignment 1"
+---
+
+# Website Design Reflection
+
+This website was created using **Quarto** in **RStudio** as part of the EPPS6302 course. The Quarto Website feature allows for simple yet powerful publishing of professional web pages directly from `.qmd` files.
+
+The website uses the **Cosmo** theme for a clean and professional appearance. A custom `styles.css` file is also included to enable additional design control if needed in the future.
+
+The navigation bar at the top includes:
+
+-   **Home**: the landing page of the website
+-   **About**: a short bio
+-   **Resume**: links directly to my uploaded CV in PDF format
+-   **Assignments**: links to course assignments like this one
+
+The site is configured using the `_quarto.yml` file, which defines layout, theme, and navigation structure.
+
+The purpose of this website is to showcase my course progress, academic credentials, and assignments in a structured and accessible way.
+
+
+
+# Podcast Review
+
+In this episode of the DataFramed podcast, Richie Cotton talks with Karen Ng, who is the Head of Product at HubSpot. They discuss how humans and AI tools can work together in modern workplaces. Karen has worked at major tech companies like Microsoft and Google, so she brings a lot of experience to the conversation.
+
+One of the main ideas in the episode is that not all AI tools are the same. Karen explains the differences between chatbots, co-pilots, and agents:
+
+- **Chatbots** are simple tools that answer basic questions.
+- **Co-pilots** are AI systems that support you while you work, like giving suggestions or completing part of a task.
+- **Agents** are more advanced. They can take a task, complete it from start to finish, and act more independently.
+
+Karen believes that AI is here to help humans, not replace them. She says, “Humans lead, and AI accelerates.” This means people should make the important decisions, and AI can help make things faster or easier. For example, if someone works in customer service, AI can help by answering common questions, so the human worker can focus on harder problems.
+
+She also talks about how companies should introduce AI step by step. She suggests starting small, testing AI tools on simple tasks, and then checking if they actually make things better. Karen says it’s important to use your company’s own data to train the AI. That way, it understands your work better.
+
+Another interesting idea she mentions is called AI Engine Optimization (AEO). It’s similar to SEO (Search Engine Optimization), but instead of helping people find your content through Google, AEO helps AI systems understand and use your content. This is a new idea, but it’s becoming more important as AI tools like ChatGPT and Google Bard are used to answer questions and summarize content.
+
+What I liked about this episode is how clear and practical it was. Even though AI is a big topic, Karen explains it in a simple way. She doesn’t use too much technical language, and she gives good examples that are easy to understand. I also appreciated that she focused on how AI can help real workers, not just replace them.
+
+Overall, I learned a lot from this podcast. It made me feel more comfortable with the idea of using AI in workplaces. I would recommend this episode to anyone who wants to understand how people and AI can work together in smart and helpful ways — especially in jobs like customer service, sales, or marketing.
