@@ -1,0 +1,76 @@
+---
+title: "Assignment 2"
+---
+
+# A. Google Trends Data (Manual Method)
+
+For this part of the assignment, I visited the [Google Trends website](https://trends.google.com/home) and searched for the terms: **Trump**, **Kamala Harris**, and **Election**. I set the geography to the **United States** and the time range to **Past 5 years**. After generating the trends, I downloaded the data as a CSV file.
+
+The dataset contains **weekly search interest scores** for each of the three terms from September 2020 to the present. Each score reflects how popular a term was in a specific week, based on Google’s relative scale from 0 to 100. This scale represents how popular a term was relative to its own highest point of popularity during the period.
+
+For example, a value of **100** indicates the week when the search term reached its **peak popularity** in the U.S. A value of **50** would mean the term was **half as popular** as it was at its peak. Values like **1**, **2**, or **\<1** reflect **very low search interest**, but they don’t mean only one person searched — just that the term was relatively unpopular in that period.
+
+From the downloaded file, I noticed that:
+
+-   “Trump” had slightly higher interest than the other two terms during most weeks.
+-   “Kamala Harris” and “Election” often had very low search interest, often marked as `<1`.
+-   These trends align with expected public attention shifts before and after election periods.
+
+# B. Google Trends Data (R Method)
+
+```{r, warning=FALSE}
+library(gtrendsR)
+
+TrumpHarrisElection = gtrends(
+  c("Trump", "Harris", "Election"),
+  onlyInterest = TRUE,
+  geo = "US",
+  gprop = "web",
+  time = "today+5-y",
+  category = 0
+) # last five years
+
+the_df = TrumpHarrisElection$interest_over_time
+plot(TrumpHarrisElection)
+```
+
+```{r, warning=FALSE}
+tg = gtrends("Russia", time = "all")
+
+# Example: Russia, Ukraine, Energy
+plot(gtrends(c("Russia"), time = "all"))
+
+data("countries")
+
+plot(gtrends(c("Russia"), geo = "US", time = "all"))
+
+plot(gtrends(c("Russia"), geo = c("US", "GB", "CN"), time = "all"))
+
+tg_iot = tg$interest_over_time
+
+tct = gtrends(c("Russia", "Ukraine", "War"), time = "all")
+tct = data.frame(tct$interest_over_time)
+
+plot(gtrends(c("Russia", "Ukraine", "War"), time = "all"))
+
+```
+
+# C. Saving Data
+
+```{r}
+write.csv(the_df, "googletrends_r.csv", row.names = FALSE)
+saveRDS(the_df, "TrumpHarrisElection.rds")
+```
+
+# D. Comparing two methods
+
+The **manual method** provides an easy interface to search terms and download CSV files. The file includes one row per week with search interest scores for each term in separate columns.
+
+The **R method** gives a structured dataset where each row represents one term per week. It includes columns like `keyword`, `date`, and `hits`.
+
+**Key differences** are as follows:
+
+-   Manual file is simpler, but not suitable for analysis.
+-   R method is reproducible, automatable, and better for plotting or filtering.
+
+Both use the same 0–100 scale, but the R version is more flexible for data analysis in R.
