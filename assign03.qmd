@@ -1,0 +1,104 @@
+---
+title: "Assignment 3"
+---
+
+This assignment demonstrates how to collect, map, and interpret US Census data using R. We use the `tidycensus`, `tigris`, `sf`, and `ggplot2` packages. The focus is on median household income and poverty counts by **county** in **California** using the **2023 ACS 5-year estimates**.
+
+```{r, warning=FALSE, message=FALSE, results='hide', include=TRUE}
+library(tidycensus)
+library(tigris)
+library(sf)
+library(dplyr)
+library(ggplot2)
+library(readr)
+
+options(tigris_use_cache = TRUE)
+```
+
+```{r, message=FALSE}
+# 1) API key (make sure you have your Census API key!)
+census_api_key("1679bfcd12ef3ba5b6103471f96325933d49aa1f", install = TRUE, overwrite = TRUE)
+```
+
+```{r}
+# 2) Explore variables
+vars <- load_variables(2023, "acs5", cache = TRUE)
+vars |> dplyr::filter(grepl("^B19", name)) |> dplyr::slice_head(n = 10)
+```
+
+```{r}
+# 3) Parameters (California)
+state_abbr <- "CA"
+geo_level  <- "county"   # options: state, county, tract, block group
+my_vars    <- c(income = "B19013_001", poverty = "B17001_002")
+year_acs   <- 2023
+survey     <- "acs5"
+```
+
+```{r}
+# 4) Download ACS data with geometry
+acs <- get_acs(
+  geography = geo_level,
+  variables = my_vars,
+  state = state_abbr,
+  year = year_acs,
+  survey = survey,
+  geometry = TRUE
+)
+```
+
+```{r}
+# 5) Convert to wide format
+acs_wide <- acs |>
+  tidyr::pivot_wider(
+    id_cols = c(GEOID, NAME, geometry),
+    names_from = variable,
+    values_from = c(estimate, moe)
+  )
+```
+
+```{r, warning=FALSE}
+# 6) Map median income
+ggplot(acs_wide) +
+  geom_sf(aes(fill = estimate_income), color = "gray", size = 0.1) +
+  scale_fill_viridis_c(name = "Median HH Income") +
+  labs(title = paste0("ACS ", year_acs, " 5-year: Median Income — ", state_abbr, " (", geo_level, ")"),
+       caption = "Source: U.S. Census Bureau via tidycensus") +
+  theme_minimal() + 
+  theme(
+  legend.position = c(0.99, 0.99),
+  legend.justification = c("right", "top"),
+  legend.title = element_text(size = 11),
+  legend.text = element_text(size = 9),
+  legend.background = element_rect(fill = alpha('white', 0.6), color = NA),
+  plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+  plot.caption = element_text(hjust = 0.5, size = 9)
+)
+```
+
+The choropleth map above visualizes **median household income** across California counties using data from the **2023 ACS 5-year estimates**. Counties are shaded using a viridis color scale, where **yellow indicates the highest income levels** and **dark purple indicates the lowest**.
+
+From the map, it is clear that the **San Francisco Bay Area** (including counties such as **Santa Clara**, **San Mateo**, and **Marin**) has the **highest median household incomes**, with some exceeding **$150,000**. These counties stand out in bright yellow. On the other hand, **inland and northern counties** such as those in the **Central Valley** or far **Northern California** tend to have **lower median incomes**, frequently under **$75,000**.
+
+
+```{r}
+# 7) Top and bottom counties by poverty count
+top10 <- acs_wide |>
+  arrange(desc(estimate_poverty)) |>
+  select(NAME, estimate_poverty, moe_poverty) |>
+  slice_head(n = 10)
+
+bottom10 <- acs_wide |>
+  arrange(estimate_poverty) |>
+  select(NAME, estimate_poverty, moe_poverty) |>
+  slice_head(n = 10)
+
+top10
+bottom10
+```
+
+```{r}
+# 8) Save the data as CSV (optional)
+readr::write_csv(st_drop_geometry(acs_wide), "acs_data.csv")
+```
+
