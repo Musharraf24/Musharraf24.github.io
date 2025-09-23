@@ -1,5 +1,6 @@
 project:
   type: website
+  output-dir: docs
 
 website:
   title: "Musharraf Mir Akhmadova"
@@ -15,6 +16,10 @@ website:
         menu:
         - href: assign01.qmd
           text: Assignment 1
+        - href: assign02.qmd
+          text: Assignment 2
+        - href: assign03.qmd
+          text: Assignment 3
 
 format:
   html:

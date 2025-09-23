@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Assignment 2 – Musharraf Mir Akhmadova</title>
+<title>Musharraf Mir Akhmadova</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,40 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -123,7 +89,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -147,6 +113,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="./assign02.html">
  <span class="dropdown-text">Assignment 2</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./assign03.html">
+ <span class="dropdown-text">Assignment 3</span></a>
+  </li>  
     </ul>
   </li>
 </ul>
@@ -160,24 +130,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#a.-google-trends-data-manual-method" id="toc-a.-google-trends-data-manual-method" class="nav-link active" data-scroll-target="#a.-google-trends-data-manual-method">A. Google Trends Data (Manual Method)</a></li>
-  <li><a href="#b.-google-trends-data-r-method" id="toc-b.-google-trends-data-r-method" class="nav-link" data-scroll-target="#b.-google-trends-data-r-method">B. Google Trends Data (R Method)</a></li>
-  <li><a href="#c.-saving-data" id="toc-c.-saving-data" class="nav-link" data-scroll-target="#c.-saving-data">C. Saving Data</a></li>
-  <li><a href="#d.-comparing-two-methods" id="toc-d.-comparing-two-methods" class="nav-link" data-scroll-target="#d.-comparing-two-methods">D. Comparing two methods</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Assignment 2</h1>
+<h1 class="title">Musharraf Mir Akhmadova</h1>
 </div>
 
 
@@ -194,107 +155,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="a.-google-trends-data-manual-method" class="level1">
-<h1>A. Google Trends Data (Manual Method)</h1>
-<p>For this part of the assignment, I visited the <a href="https://trends.google.com/home">Google Trends website</a> and searched for the terms: <strong>Trump</strong>, <strong>Kamala Harris</strong>, and <strong>Election</strong>. I set the geography to the <strong>United States</strong> and the time range to <strong>Past 5 years</strong>. After generating the trends, I downloaded the data as a CSV file.</p>
-<p>The dataset contains <strong>weekly search interest scores</strong> for each of the three terms from September 2020 to the present. Each score reflects how popular a term was in a specific week, based on Google’s relative scale from 0 to 100. This scale represents how popular a term was relative to its own highest point of popularity during the period.</p>
-<p>For example, a value of <strong>100</strong> indicates the week when the search term reached its <strong>peak popularity</strong> in the U.S. A value of <strong>50</strong> would mean the term was <strong>half as popular</strong> as it was at its peak. Values like <strong>1</strong>, <strong>2</strong>, or <strong>&lt;1</strong> reflect <strong>very low search interest</strong>, but they don’t mean only one person searched — just that the term was relatively unpopular in that period.</p>
-<p>From the downloaded file, I noticed that:</p>
-<ul>
-<li>“Trump” had slightly higher interest than the other two terms during most weeks.</li>
-<li>“Kamala Harris” and “Election” often had very low search interest, often marked as <code>&lt;1</code>.</li>
-<li>These trends align with expected public attention shifts before and after election periods.</li>
-</ul>
-</section>
-<section id="b.-google-trends-data-r-method" class="level1">
-<h1>B. Google Trends Data (R Method)</h1>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtrendsR)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>TrumpHarrisElection <span class="ot">=</span> <span class="fu">gtrends</span>(</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">"Trump"</span>, <span class="st">"Harris"</span>, <span class="st">"Election"</span>),</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">onlyInterest =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">geo =</span> <span class="st">"US"</span>,</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">gprop =</span> <span class="st">"web"</span>,</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">time =</span> <span class="st">"today+5-y"</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">category =</span> <span class="dv">0</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>) <span class="co"># last five years</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>the_df <span class="ot">=</span> TrumpHarrisElection<span class="sc">$</span>interest_over_time</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(TrumpHarrisElection)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="assign02_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tg <span class="ot">=</span> <span class="fu">gtrends</span>(<span class="st">"Russia"</span>, <span class="at">time =</span> <span class="st">"all"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Russia, Ukraine, Energy</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">gtrends</span>(<span class="fu">c</span>(<span class="st">"Russia"</span>), <span class="at">time =</span> <span class="st">"all"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="assign02_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"countries"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">gtrends</span>(<span class="fu">c</span>(<span class="st">"Russia"</span>), <span class="at">geo =</span> <span class="st">"US"</span>, <span class="at">time =</span> <span class="st">"all"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="assign02_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">gtrends</span>(<span class="fu">c</span>(<span class="st">"Russia"</span>), <span class="at">geo =</span> <span class="fu">c</span>(<span class="st">"US"</span>, <span class="st">"GB"</span>, <span class="st">"CN"</span>), <span class="at">time =</span> <span class="st">"all"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="assign02_files/figure-html/unnamed-chunk-2-3.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tg_iot <span class="ot">=</span> tg<span class="sc">$</span>interest_over_time</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>tct <span class="ot">=</span> <span class="fu">gtrends</span>(<span class="fu">c</span>(<span class="st">"Russia"</span>, <span class="st">"Ukraine"</span>, <span class="st">"War"</span>), <span class="at">time =</span> <span class="st">"all"</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>tct <span class="ot">=</span> <span class="fu">data.frame</span>(tct<span class="sc">$</span>interest_over_time)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">gtrends</span>(<span class="fu">c</span>(<span class="st">"Russia"</span>, <span class="st">"Ukraine"</span>, <span class="st">"War"</span>), <span class="at">time =</span> <span class="st">"all"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="assign02_files/figure-html/unnamed-chunk-2-4.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="c.-saving-data" class="level1">
-<h1>C. Saving Data</h1>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(the_df, <span class="st">"googletrends_r.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(the_df, <span class="st">"TrumpHarrisElection.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="d.-comparing-two-methods" class="level1">
-<h1>D. Comparing two methods</h1>
-<p>The <strong>manual method</strong> provides an easy interface to search terms and download CSV files. The file includes one row per week with search interest scores for each term in separate columns.</p>
-<p>The <strong>R method</strong> gives a structured dataset where each row represents one term per week. It includes columns like <code>keyword</code>, <code>date</code>, and <code>hits</code>.</p>
-<p><strong>Key differences</strong> are as follows:</p>
-<ul>
-<li>Manual file is simpler, but not suitable for analysis.</li>
-<li>R method is reproducible, automatable, and better for plotting or filtering.</li>
-</ul>
-<p>Both use the same 0–100 scale, but the R version is more flexible for data analysis in R.</p>
+<p><strong>HELLO</strong> and <strong>WELCOME</strong> to my page. In this page you can find information about me and my assignments for the course EPPS6302.</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

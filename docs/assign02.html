@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Assignment 1 – Musharraf Mir Akhmadova</title>
+<title>Assignment 2 – Musharraf Mir Akhmadova</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -109,6 +143,14 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="./assign01.html">
  <span class="dropdown-text">Assignment 1</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./assign02.html">
+ <span class="dropdown-text">Assignment 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./assign03.html">
+ <span class="dropdown-text">Assignment 3</span></a>
+  </li>  
     </ul>
   </li>
 </ul>
@@ -127,8 +169,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#website-design-reflection" id="toc-website-design-reflection" class="nav-link active" data-scroll-target="#website-design-reflection">Website Design Reflection</a></li>
-  <li><a href="#podcast-review" id="toc-podcast-review" class="nav-link" data-scroll-target="#podcast-review">Podcast Review</a></li>
+  <li><a href="#a.-google-trends-data-manual-method" id="toc-a.-google-trends-data-manual-method" class="nav-link active" data-scroll-target="#a.-google-trends-data-manual-method">A. Google Trends Data (Manual Method)</a></li>
+  <li><a href="#b.-google-trends-data-r-method" id="toc-b.-google-trends-data-r-method" class="nav-link" data-scroll-target="#b.-google-trends-data-r-method">B. Google Trends Data (R Method)</a></li>
+  <li><a href="#c.-saving-data" id="toc-c.-saving-data" class="nav-link" data-scroll-target="#c.-saving-data">C. Saving Data</a></li>
+  <li><a href="#d.-comparing-two-methods" id="toc-d.-comparing-two-methods" class="nav-link" data-scroll-target="#d.-comparing-two-methods">D. Comparing two methods</a></li>
   </ul>
 </nav>
     </div>
@@ -137,7 +181,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Assignment 1</h1>
+<h1 class="title">Assignment 2</h1>
 </div>
 
 
@@ -154,34 +198,104 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="website-design-reflection" class="level1">
-<h1>Website Design Reflection</h1>
-<p>This website was created using <strong>Quarto</strong> in <strong>RStudio</strong> as part of the EPPS6302 course. The Quarto Website feature allows for simple yet powerful publishing of professional web pages directly from <code>.qmd</code> files.</p>
-<p>The website uses the <strong>Cosmo</strong> theme for a clean and professional appearance. A custom <code>styles.css</code> file is also included to enable additional design control if needed in the future.</p>
-<p>The navigation bar at the top includes:</p>
+<section id="a.-google-trends-data-manual-method" class="level1">
+<h1>A. Google Trends Data (Manual Method)</h1>
+<p>For this part of the assignment, I visited the <a href="https://trends.google.com/home">Google Trends website</a> and searched for the terms: <strong>Trump</strong>, <strong>Kamala Harris</strong>, and <strong>Election</strong>. I set the geography to the <strong>United States</strong> and the time range to <strong>Past 5 years</strong>. After generating the trends, I downloaded the data as a CSV file.</p>
+<p>The dataset contains <strong>weekly search interest scores</strong> for each of the three terms from September 2020 to the present. Each score reflects how popular a term was in a specific week, based on Google’s relative scale from 0 to 100. This scale represents how popular a term was relative to its own highest point of popularity during the period.</p>
+<p>For example, a value of <strong>100</strong> indicates the week when the search term reached its <strong>peak popularity</strong> in the U.S. A value of <strong>50</strong> would mean the term was <strong>half as popular</strong> as it was at its peak. Values like <strong>1</strong>, <strong>2</strong>, or <strong>&lt;1</strong> reflect <strong>very low search interest</strong>, but they don’t mean only one person searched — just that the term was relatively unpopular in that period.</p>
+<p>From the downloaded file, I noticed that:</p>
 <ul>
-<li><strong>Home</strong>: the landing page of the website</li>
-<li><strong>About</strong>: a short bio</li>
-<li><strong>Resume</strong>: links directly to my uploaded CV in PDF format</li>
-<li><strong>Assignments</strong>: links to course assignments like this one</li>
+<li>“Trump” had slightly higher interest than the other two terms during most weeks.</li>
+<li>“Kamala Harris” and “Election” often had very low search interest, often marked as <code>&lt;1</code>.</li>
+<li>These trends align with expected public attention shifts before and after election periods.</li>
 </ul>
-<p>The site is configured using the <code>_quarto.yml</code> file, which defines layout, theme, and navigation structure.</p>
-<p>The purpose of this website is to showcase my course progress, academic credentials, and assignments in a structured and accessible way.</p>
 </section>
-<section id="podcast-review" class="level1">
-<h1>Podcast Review</h1>
-<p>In this episode of the DataFramed podcast, Richie Cotton talks with Karen Ng, who is the Head of Product at HubSpot. They discuss how humans and AI tools can work together in modern workplaces. Karen has worked at major tech companies like Microsoft and Google, so she brings a lot of experience to the conversation.</p>
-<p>One of the main ideas in the episode is that not all AI tools are the same. Karen explains the differences between chatbots, co-pilots, and agents:</p>
+<section id="b.-google-trends-data-r-method" class="level1">
+<h1>B. Google Trends Data (R Method)</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtrendsR)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>TrumpHarrisElection <span class="ot">=</span> <span class="fu">gtrends</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">"Trump"</span>, <span class="st">"Harris"</span>, <span class="st">"Election"</span>),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">onlyInterest =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">geo =</span> <span class="st">"US"</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">gprop =</span> <span class="st">"web"</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">time =</span> <span class="st">"today+5-y"</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">category =</span> <span class="dv">0</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>) <span class="co"># last five years</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>the_df <span class="ot">=</span> TrumpHarrisElection<span class="sc">$</span>interest_over_time</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(TrumpHarrisElection)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assign02_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tg <span class="ot">=</span> <span class="fu">gtrends</span>(<span class="st">"Russia"</span>, <span class="at">time =</span> <span class="st">"all"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Russia, Ukraine, Energy</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">gtrends</span>(<span class="fu">c</span>(<span class="st">"Russia"</span>), <span class="at">time =</span> <span class="st">"all"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assign02_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"countries"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">gtrends</span>(<span class="fu">c</span>(<span class="st">"Russia"</span>), <span class="at">geo =</span> <span class="st">"US"</span>, <span class="at">time =</span> <span class="st">"all"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assign02_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">gtrends</span>(<span class="fu">c</span>(<span class="st">"Russia"</span>), <span class="at">geo =</span> <span class="fu">c</span>(<span class="st">"US"</span>, <span class="st">"GB"</span>, <span class="st">"CN"</span>), <span class="at">time =</span> <span class="st">"all"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assign02_files/figure-html/unnamed-chunk-2-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tg_iot <span class="ot">=</span> tg<span class="sc">$</span>interest_over_time</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>tct <span class="ot">=</span> <span class="fu">gtrends</span>(<span class="fu">c</span>(<span class="st">"Russia"</span>, <span class="st">"Ukraine"</span>, <span class="st">"War"</span>), <span class="at">time =</span> <span class="st">"all"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>tct <span class="ot">=</span> <span class="fu">data.frame</span>(tct<span class="sc">$</span>interest_over_time)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">gtrends</span>(<span class="fu">c</span>(<span class="st">"Russia"</span>, <span class="st">"Ukraine"</span>, <span class="st">"War"</span>), <span class="at">time =</span> <span class="st">"all"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assign02_files/figure-html/unnamed-chunk-2-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="c.-saving-data" class="level1">
+<h1>C. Saving Data</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(the_df, <span class="st">"googletrends_r.csv"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(the_df, <span class="st">"TrumpHarrisElection.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="d.-comparing-two-methods" class="level1">
+<h1>D. Comparing two methods</h1>
+<p>The <strong>manual method</strong> provides an easy interface to search terms and download CSV files. The file includes one row per week with search interest scores for each term in separate columns.</p>
+<p>The <strong>R method</strong> gives a structured dataset where each row represents one term per week. It includes columns like <code>keyword</code>, <code>date</code>, and <code>hits</code>.</p>
+<p><strong>Key differences</strong> are as follows:</p>
 <ul>
-<li><strong>Chatbots</strong> are simple tools that answer basic questions.</li>
-<li><strong>Co-pilots</strong> are AI systems that support you while you work, like giving suggestions or completing part of a task.</li>
-<li><strong>Agents</strong> are more advanced. They can take a task, complete it from start to finish, and act more independently.</li>
+<li>Manual file is simpler, but not suitable for analysis.</li>
+<li>R method is reproducible, automatable, and better for plotting or filtering.</li>
 </ul>
-<p>Karen believes that AI is here to help humans, not replace them. She says, “Humans lead, and AI accelerates.” This means people should make the important decisions, and AI can help make things faster or easier. For example, if someone works in customer service, AI can help by answering common questions, so the human worker can focus on harder problems.</p>
-<p>She also talks about how companies should introduce AI step by step. She suggests starting small, testing AI tools on simple tasks, and then checking if they actually make things better. Karen says it’s important to use your company’s own data to train the AI. That way, it understands your work better.</p>
-<p>Another interesting idea she mentions is called AI Engine Optimization (AEO). It’s similar to SEO (Search Engine Optimization), but instead of helping people find your content through Google, AEO helps AI systems understand and use your content. This is a new idea, but it’s becoming more important as AI tools like ChatGPT and Google Bard are used to answer questions and summarize content.</p>
-<p>What I liked about this episode is how clear and practical it was. Even though AI is a big topic, Karen explains it in a simple way. She doesn’t use too much technical language, and she gives good examples that are easy to understand. I also appreciated that she focused on how AI can help real workers, not just replace them.</p>
-<p>Overall, I learned a lot from this podcast. It made me feel more comfortable with the idea of using AI in workplaces. I would recommend this episode to anyone who wants to understand how people and AI can work together in smart and helpful ways — especially in jobs like customer service, sales, or marketing.</p>
+<p>Both use the same 0–100 scale, but the R version is more flexible for data analysis in R.</p>
 
 
 </section>
