@@ -1,0 +1,81 @@
+---
+title: "Assignment 4"
+---
+
+# Task Overview
+
+This assignment demonstrates how to scrape foreign exchange reserve data from Wikipedia using R. The provided base code utilizes the `rvest` package. We modify it to scrape other tables, clean the data, and suggest a data collection plan for research.
+
+```{r, message=FALSE, warning=FALSE}
+# Load necessary libraries
+library(tidyverse)
+library(rvest)
+library(stringr)
+```
+
+# Read and Scrape the Wikipedia Page
+
+```{r}
+# Read the web page
+url <- 'https://en.wikipedia.org/wiki/List_of_countries_by_foreign-exchange_reserves'
+wikiforreserve <- read_html(url)
+
+# Extract the first table
+foreignreserve <- wikiforreserve %>%
+  html_nodes(xpath = '//*[@id="mw-content-text"]/div/table[1]') %>%
+  html_table()
+
+# Convert the table to a data frame
+fores <- foreignreserve[[1]]
+
+# View original column names
+names(fores)
+```
+
+# Clean Up the Data
+
+```{r, warning=FALSE}
+# Assign consistent column names
+names(fores) <- c("Country", "Continent", 
+                  "Forexres_InclGold", "Change_InclGold", 
+                  "Forexres_ExclGold", "Change_ExclGold", 
+                  "Date", "Ref")
+
+# Remove junk rows and unnecessary column
+fores <- fores[-c(1, 2), ]
+fores <- select(fores, -Ref)
+
+# Clean date column (remove footnotes)
+fores <- fores %>%
+  mutate(Date = trimws(str_split_fixed(Date, "\\[", 2)[,1]))
+
+# Convert numeric columns (remove commas)
+fores <- fores %>%
+  mutate(across(c(Forexres_InclGold, Change_InclGold, 
+                  Forexres_ExclGold, Change_ExclGold),
+                ~ as.numeric(str_remove_all(., ","))))
+
+# Create Rank based on Forexres_InclGold
+fores <- fores %>%
+  arrange(desc(Forexres_InclGold)) %>%
+  mutate(Rank = row_number())
+
+# Move Rank to the first column
+fores <- fores %>%
+  select(Rank, everything())
+
+# Print top 10 rows with all columns visible
+print(head(fores, 10), width = Inf)
+```
+
+# Suggest a Web Data Collection Plan for Research
+
+This assignment demonstrates how to scrape foreign exchange reserve data from Wikipedia using R. We use the `rvest`, `stringr`, and `tidyverse` packages. The focus is on extracting structured tabular data, cleaning variables such as **date**, and preparing it for research use.
+
+A simple data collection plan might involve:
+
+-   **Objective**: Identify trends in macroeconomic indicators across countries\
+-   **Sources**: Wikipedia, World Bank, IMF, TradingEconomics\
+-   **Tools**: `rvest`, `httr`, `jsonlite` for APIs\
+-   **Storage**: Save into `.csv` or SQLite for reproducibility\
+-   **Schedule**: Update monthly or quarterly via scheduled R scripts (using `cronR` or `taskscheduleR`)
