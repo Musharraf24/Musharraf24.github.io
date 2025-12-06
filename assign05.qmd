@@ -12,7 +12,7 @@ We use R packages like `rjson`, `jsonlite`, `purrr`, and `magrittr` to parse met
 
 We begin by loading the required packages and resetting memory. You may need to install some of these using `install.packages()` before running this.
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, message=FALSE}
 # Load necessary packages
 library(purrr)
 library(magrittr)
@@ -63,7 +63,7 @@ govfiles3 <- govfiles3 |> dplyr::bind_rows()
 
 We use a simple `for loop` to download the first five PDFs from *govfiles3*. These files are saved in the same working directory.
 
-```{r}
+```{r, message=FALSE}
 for (i in 1:5) {
   download.file(
     url = govfiles3$pdfLink[i],
