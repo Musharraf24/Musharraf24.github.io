@@ -1,0 +1,74 @@
+---
+title: "Assignment 5"
+---
+
+## Task Overview
+
+In this assignment, we demonstrate how to scrape U.S. **Congressional government document metadata** using a `.csv` or `.json` file from [GovInfo.gov](https://www.govinfo.gov/app/search). 
+
+We use R packages like `rjson`, `jsonlite`, `purrr`, and `magrittr` to parse metadata and download government documents in bulk. This is especially useful for setting up background jobs for **automated data collection** in political science, public policy, and legal research.
+
+## Step 1: Load Required Packages
+
+We begin by loading the required packages and resetting memory. You may need to install some of these using `install.packages()` before running this.
+
+```{r, warning=FALSE}
+# Load necessary packages
+library(purrr)
+library(magrittr)
+library(dplyr)
+library(rjson)
+library(jsonlite)
+library(data.table)
+library(readr)
+
+# Reset memory (optional)
+gc(reset = TRUE)
+```
+
+## Step 2: Read the Metadata File (CSV Method)
+
+```{r}
+## CSV method
+govfiles = read.csv(
+  file = "https://github.com/datageneration/datamethods/raw/refs/heads/master/webdata/govinfo-search-results-2024-10-13T07_10_42.csv",
+  skip = 2
+)
+```
+
+## Step 3: Load Metadata Using rjson (JSON Method)
+
+The JSON file provides the same data in a structured format. Here we use the `rjson` package and combine the results into a single data frame.
+
+```{r}
+## JSON method: rjson
+gf_list <- rjson::fromJSON(
+  file ="https://github.com/datageneration/datamethods/raw/refs/heads/master/webdata/govinfo-search-results-2024-10-13T07_18_29.json"
+)
+govfiles2 = dplyr::bind_rows(gf_list$resultSet)
+
+## JSON method: jsonlite
+gf_list1 = jsonlite::read_json(
+  "https://github.com/datageneration/datamethods/raw/refs/heads/master/webdata/govinfo-search-results-2024-10-13T07_18_29.json"
+)
+
+## Extract the list
+govfiles3 <- gf_list1$resultSet
+
+## One more step: flatten into a data frame
+govfiles3 <- govfiles3 |> dplyr::bind_rows()
+```
+
+## Step 4: Download 5 Sample Reports
+
+We use a simple `for loop` to download the first five PDFs from *govfiles3*. These files are saved in the same working directory.
+
+```{r}
+for (i in 1:5) {
+  download.file(
+    url = govfiles3$pdfLink[i],
+    destfile = paste0("report_", i, ".pdf")
+  )
+}
+```
+

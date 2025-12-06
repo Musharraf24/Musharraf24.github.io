@@ -75,5 +75,47 @@
     "title": "Assignment 4",
     "section": "Suggest a Web Data Collection Plan for Research",
     "text": "Suggest a Web Data Collection Plan for Research\nThis assignment demonstrates how to scrape foreign exchange reserve data from Wikipedia using R. We use the rvest, stringr, and tidyverse packages. The focus is on extracting structured tabular data, cleaning variables such as date, and preparing it for research use.\nA simple data collection plan might involve:\n\nObjective: Identify trends in macroeconomic indicators across countries\n\nSources: Wikipedia, World Bank, IMF, TradingEconomics\n\nTools: rvest, httr, jsonlite for APIs\n\nStorage: Save into .csv or SQLite for reproducibility\n\nSchedule: Update monthly or quarterly via scheduled R scripts (using cronR or taskscheduleR)"
+  },
+  {
+    "objectID": "assign05.html",
+    "href": "assign05.html",
+    "title": "Assignment 5",
+    "section": "",
+    "text": "In this assignment, we demonstrate how to scrape U.S. Congressional government document metadata using a .csv or .json file from GovInfo.gov.\nWe use R packages like rjson, jsonlite, purrr, and magrittr to parse metadata and download government documents in bulk. This is especially useful for setting up background jobs for automated data collection in political science, public policy, and legal research."
+  },
+  {
+    "objectID": "assign05.html#task-overview",
+    "href": "assign05.html#task-overview",
+    "title": "Assignment 5",
+    "section": "",
+    "text": "In this assignment, we demonstrate how to scrape U.S. Congressional government document metadata using a .csv or .json file from GovInfo.gov.\nWe use R packages like rjson, jsonlite, purrr, and magrittr to parse metadata and download government documents in bulk. This is especially useful for setting up background jobs for automated data collection in political science, public policy, and legal research."
+  },
+  {
+    "objectID": "assign05.html#step-1-load-required-packages",
+    "href": "assign05.html#step-1-load-required-packages",
+    "title": "Assignment 5",
+    "section": "Step 1: Load Required Packages",
+    "text": "Step 1: Load Required Packages\nWe begin by loading the required packages and resetting memory. You may need to install some of these using install.packages() before running this.\n\n# Load necessary packages\nlibrary(purrr)\nlibrary(magrittr)\n\n\nAttaching package: 'magrittr'\n\n\nThe following object is masked from 'package:purrr':\n\n    set_names\n\nlibrary(dplyr)\n\n\nAttaching package: 'dplyr'\n\n\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n\n\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n\nlibrary(rjson)\nlibrary(jsonlite)\n\n\nAttaching package: 'jsonlite'\n\n\nThe following objects are masked from 'package:rjson':\n\n    fromJSON, toJSON\n\n\nThe following object is masked from 'package:purrr':\n\n    flatten\n\nlibrary(data.table)\n\n\nAttaching package: 'data.table'\n\n\nThe following objects are masked from 'package:dplyr':\n\n    between, first, last\n\n\nThe following object is masked from 'package:purrr':\n\n    transpose\n\nlibrary(readr)\n\n# Reset memory (optional)\ngc(reset = TRUE)\n\n          used (Mb) gc trigger (Mb) max used (Mb)\nNcells  720937 38.6    1404464 75.1   720937 38.6\nVcells 1269087  9.7    8388608 64.0  1269087  9.7"
+  },
+  {
+    "objectID": "assign05.html#step-2-read-the-metadata-file-csv-method",
+    "href": "assign05.html#step-2-read-the-metadata-file-csv-method",
+    "title": "Assignment 5",
+    "section": "Step 2: Read the Metadata File (CSV Method)",
+    "text": "Step 2: Read the Metadata File (CSV Method)\n\n## CSV method\ngovfiles = read.csv(\n  file = \"https://github.com/datageneration/datamethods/raw/refs/heads/master/webdata/govinfo-search-results-2024-10-13T07_10_42.csv\",\n  skip = 2\n)"
+  },
+  {
+    "objectID": "assign05.html#step-3-load-metadata-using-rjson-json-method",
+    "href": "assign05.html#step-3-load-metadata-using-rjson-json-method",
+    "title": "Assignment 5",
+    "section": "Step 3: Load Metadata Using rjson (JSON Method)",
+    "text": "Step 3: Load Metadata Using rjson (JSON Method)\nThe JSON file provides the same data in a structured format. Here we use the rjson package and combine the results into a single data frame.\n\n## JSON method: rjson\ngf_list &lt;- rjson::fromJSON(\n  file =\"https://github.com/datageneration/datamethods/raw/refs/heads/master/webdata/govinfo-search-results-2024-10-13T07_18_29.json\"\n)\ngovfiles2 = dplyr::bind_rows(gf_list$resultSet)\n\n## JSON method: jsonlite\ngf_list1 = jsonlite::read_json(\n  \"https://github.com/datageneration/datamethods/raw/refs/heads/master/webdata/govinfo-search-results-2024-10-13T07_18_29.json\"\n)\n\n## Extract the list\ngovfiles3 &lt;- gf_list1$resultSet\n\n## One more step: flatten into a data frame\ngovfiles3 &lt;- govfiles3 |&gt; dplyr::bind_rows()"
+  },
+  {
+    "objectID": "assign05.html#step-4-download-5-sample-reports",
+    "href": "assign05.html#step-4-download-5-sample-reports",
+    "title": "Assignment 5",
+    "section": "Step 4: Download 5 Sample Reports",
+    "text": "Step 4: Download 5 Sample Reports\nWe use a simple for loop to download the first five PDFs from govfiles3. These files are saved in the same working directory.\n\nfor (i in 1:5) {\n  download.file(\n    url = govfiles3$pdfLink[i],\n    destfile = paste0(\"report_\", i, \".pdf\")\n  )\n}"
   }
 ]
