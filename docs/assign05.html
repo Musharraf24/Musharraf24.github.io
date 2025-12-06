@@ -178,10 +178,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#task-overview" id="toc-task-overview" class="nav-link active" data-scroll-target="#task-overview">Task Overview</a></li>
+  <li><a href="#implementatiom" id="toc-implementatiom" class="nav-link" data-scroll-target="#implementatiom">Implementatiom</a>
+  <ul class="collapse">
   <li><a href="#step-1-load-required-packages" id="toc-step-1-load-required-packages" class="nav-link" data-scroll-target="#step-1-load-required-packages">Step 1: Load Required Packages</a></li>
   <li><a href="#step-2-read-the-metadata-file-csv-method" id="toc-step-2-read-the-metadata-file-csv-method" class="nav-link" data-scroll-target="#step-2-read-the-metadata-file-csv-method">Step 2: Read the Metadata File (CSV Method)</a></li>
   <li><a href="#step-3-load-metadata-using-rjson-json-method" id="toc-step-3-load-metadata-using-rjson-json-method" class="nav-link" data-scroll-target="#step-3-load-metadata-using-rjson-json-method">Step 3: Load Metadata Using rjson (JSON Method)</a></li>
   <li><a href="#step-4-download-5-sample-reports" id="toc-step-4-download-5-sample-reports" class="nav-link" data-scroll-target="#step-4-download-5-sample-reports">Step 4: Download 5 Sample Reports</a></li>
+  <li><a href="#step-5-show-preview-of-scraped-metadata" id="toc-step-5-show-preview-of-scraped-metadata" class="nav-link" data-scroll-target="#step-5-show-preview-of-scraped-metadata">Step 5: Show preview of scraped metadata</a></li>
+  <li><a href="#step-6-list-downloaded-files" id="toc-step-6-list-downloaded-files" class="nav-link" data-scroll-target="#step-6-list-downloaded-files">Step 6: List Downloaded Files</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
   </ul>
 </nav>
     </div>
@@ -212,8 +218,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In this assignment, we demonstrate how to scrape U.S. <strong>Congressional government document metadata</strong> using a <code>.csv</code> or <code>.json</code> file from <a href="https://www.govinfo.gov/app/search">GovInfo.gov</a>.</p>
 <p>We use R packages like <code>rjson</code>, <code>jsonlite</code>, <code>purrr</code>, and <code>magrittr</code> to parse metadata and download government documents in bulk. This is especially useful for setting up background jobs for <strong>automated data collection</strong> in political science, public policy, and legal research.</p>
 </section>
-<section id="step-1-load-required-packages" class="level2">
-<h2 class="anchored" data-anchor-id="step-1-load-required-packages">Step 1: Load Required Packages</h2>
+<section id="implementatiom" class="level2">
+<h2 class="anchored" data-anchor-id="implementatiom">Implementatiom</h2>
+<section id="step-1-load-required-packages" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-load-required-packages">Step 1: Load Required Packages</h3>
 <p>We begin by loading the required packages and resetting memory. You may need to install some of these using <code>install.packages()</code> before running this.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load necessary packages</span></span>
@@ -229,13 +237,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>(<span class="at">reset =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          used (Mb) gc trigger (Mb) max used (Mb)
-Ncells  720843 38.5    1404178   75   720843 38.5
-Vcells 1268977  9.7    8388608   64  1268977  9.7</code></pre>
+Ncells  720913 38.6    1404095   75   720913 38.6
+Vcells 1269454  9.7    8388608   64  1269454  9.7</code></pre>
 </div>
 </div>
 </section>
-<section id="step-2-read-the-metadata-file-csv-method" class="level2">
-<h2 class="anchored" data-anchor-id="step-2-read-the-metadata-file-csv-method">Step 2: Read the Metadata File (CSV Method)</h2>
+<section id="step-2-read-the-metadata-file-csv-method" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-read-the-metadata-file-csv-method">Step 2: Read the Metadata File (CSV Method)</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## CSV method</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>govfiles <span class="ot">=</span> <span class="fu">read.csv</span>(</span>
@@ -244,8 +252,8 @@ Vcells 1268977  9.7    8388608   64  1268977  9.7</code></pre>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="step-3-load-metadata-using-rjson-json-method" class="level2">
-<h2 class="anchored" data-anchor-id="step-3-load-metadata-using-rjson-json-method">Step 3: Load Metadata Using rjson (JSON Method)</h2>
+<section id="step-3-load-metadata-using-rjson-json-method" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-load-metadata-using-rjson-json-method">Step 3: Load Metadata Using rjson (JSON Method)</h3>
 <p>The JSON file provides the same data in a structured format. Here we use the <code>rjson</code> package and combine the results into a single data frame.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">## JSON method: rjson</span></span>
@@ -266,8 +274,8 @@ Vcells 1268977  9.7    8388608   64  1268977  9.7</code></pre>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>govfiles3 <span class="ot">&lt;-</span> govfiles3 <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="step-4-download-5-sample-reports" class="level2">
-<h2 class="anchored" data-anchor-id="step-4-download-5-sample-reports">Step 4: Download 5 Sample Reports</h2>
+<section id="step-4-download-5-sample-reports" class="level3">
+<h3 class="anchored" data-anchor-id="step-4-download-5-sample-reports">Step 4: Download 5 Sample Reports</h3>
 <p>We use a simple <code>for loop</code> to download the first five PDFs from <em>govfiles3</em>. These files are saved in the same working directory.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) {</span>
@@ -277,6 +285,39 @@ Vcells 1268977  9.7    8388608   64  1268977  9.7</code></pre>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="step-5-show-preview-of-scraped-metadata" class="level3">
+<h3 class="anchored" data-anchor-id="step-5-show-preview-of-scraped-metadata">Step 5: Show preview of scraped metadata</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(govfiles3[, <span class="fu">c</span>(<span class="st">"title"</span>, <span class="st">"pdfLink"</span>)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  title                                                                  pdfLink
+  &lt;chr&gt;                                                                  &lt;chr&gt;  
+1 Condemning the brutal Hamas-led terrorist attack on Israel on October… https:…
+2 Providing for congressional disapproval of the proposed foreign milit… https:…
+3 Commemorating the tenth anniversary of the murder of James Wright Fol… https:…
+4 Providing for congressional disapproval of the proposed license amend… https:…
+5 Providing for congressional disapproval of the proposed foreign milit… https:…
+6 Providing for congressional disapproval of the proposed foreign milit… https:…</code></pre>
+</div>
+</div>
+</section>
+<section id="step-6-list-downloaded-files" class="level3">
+<h3 class="anchored" data-anchor-id="step-6-list-downloaded-files">Step 6: List Downloaded Files</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(<span class="at">pattern =</span> <span class="st">"report_.*.pdf"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "report_1.pdf" "report_2.pdf" "report_3.pdf" "report_4.pdf" "report_5.pdf"</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>In this assignment, I scraped U.S. government documents using JSON metadata from GovInfo.gov.<br>
+Using the <code>rjson</code> and <code>jsonlite</code> packages, I extracted metadata, previewed document titles, and batch-downloaded five official PDF reports.<br>
+The table above shows a preview of document titles and download links, and the messages below confirm the successful downloads.</p>
 
 
 </section>

@@ -8,7 +8,9 @@ In this assignment, we demonstrate how to scrape U.S. **Congressional government
 
 We use R packages like `rjson`, `jsonlite`, `purrr`, and `magrittr` to parse metadata and download government documents in bulk. This is especially useful for setting up background jobs for **automated data collection** in political science, public policy, and legal research.
 
-## Step 1: Load Required Packages
+## Implementatiom
+
+### Step 1: Load Required Packages
 
 We begin by loading the required packages and resetting memory. You may need to install some of these using `install.packages()` before running this.
 
@@ -26,7 +28,7 @@ library(readr)
 gc(reset = TRUE)
 ```
 
-## Step 2: Read the Metadata File (CSV Method)
+### Step 2: Read the Metadata File (CSV Method)
 
 ```{r}
 ## CSV method
@@ -36,7 +38,7 @@ govfiles = read.csv(
 )
 ```
 
-## Step 3: Load Metadata Using rjson (JSON Method)
+### Step 3: Load Metadata Using rjson (JSON Method)
 
 The JSON file provides the same data in a structured format. Here we use the `rjson` package and combine the results into a single data frame.
 
@@ -59,7 +61,7 @@ govfiles3 <- gf_list1$resultSet
 govfiles3 <- govfiles3 |> dplyr::bind_rows()
 ```
 
-## Step 4: Download 5 Sample Reports
+### Step 4: Download 5 Sample Reports
 
 We use a simple `for loop` to download the first five PDFs from *govfiles3*. These files are saved in the same working directory.
 
@@ -71,4 +73,19 @@ for (i in 1:5) {
   )
 }
 ```
+### Step 5: Show preview of scraped metadata
 
+```{r}
+head(govfiles3[, c("title", "pdfLink")])
+```
+### Step 6: List Downloaded Files
+
+```{r}
+list.files(pattern = "report_.*.pdf")
+```
+
+## Summary
+
+In this assignment, I scraped U.S. government documents using JSON metadata from GovInfo.gov.  
+Using the `rjson` and `jsonlite` packages, I extracted metadata, previewed document titles, and batch-downloaded five official PDF reports.  
+The table above shows a preview of document titles and download links, and the messages below confirm the successful downloads.
