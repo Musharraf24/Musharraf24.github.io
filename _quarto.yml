@@ -6,26 +6,26 @@ website:
   title: "Musharraf Mir Akhmadova"
   navbar:
     left:
-      - href: index.qmd
+      - href: /index.qmd
         text: Home
-      - href: about.qmd
+      - href: /about.qmd
         text: About
-      - href: CV.pdf
+      - href: /CV.pdf
         text: Resume
       - text: Assignments
         menu:
-        - href: assign01.qmd
-          text: Assignment 1
-        - href: assign02.qmd
-          text: Assignment 2
-        - href: assign03.qmd
-          text: Assignment 3
-        - href: assign04.qmd
-          text: Assignment 4
-        - href: assign05.qmd
-          text: Assignment 5
-        - href: assign06.qmd
-          text: Assignment 6
+          - href: /assign01.qmd
+            text: Assignment 1
+          - href: /assign02.qmd
+            text: Assignment 2
+          - href: /assign03.qmd
+            text: Assignment 3
+          - href: /assign04.qmd
+            text: Assignment 4
+          - href: /assign05.qmd
+            text: Assignment 5
+          - href: /assign06.qmd
+            text: Assignment 6
           
 
 format:
