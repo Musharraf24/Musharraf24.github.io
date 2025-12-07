@@ -4,6 +4,7 @@ project:
 
 website:
   title: "Musharraf Mir Akhmadova"
+  site-url: "https://musharraf24.github.io"
   navbar:
     left:
       - href: /index.qmd
