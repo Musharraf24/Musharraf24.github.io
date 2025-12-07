@@ -18,7 +18,7 @@ This dataset includes tweets about the Biden–Xi summit in November 2021. We pe
 
 ### Load Required Libraries
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, message=FALSE}
 library(quanteda)
 library(quanteda.textmodels)
 library(quanteda.textplots)
